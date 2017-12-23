@@ -1,33 +1,47 @@
-body{
+body {
   font-family: 'Roboto', sans-serif;
 }
 
-.controls{
+.controls {
   display: flex;
   margin: 0;
   align-items: center;
   justify-content: space-between;
   padding: 10px 50px;
+  flex-wrap: wrap;
+  flex: 1 1 350px;
 }
-.tabelControls{
+
+.tabelControls {
   max-width: 130px;
 }
-.colorControls{
+
+.fontControl {
   max-width: 150px;
 }
-input{
+
+.colorControls {
+  max-width: 150px;
+}
+
+input {
   width: 100%;
   max-width: 200px;
 }
+
 table {
   border-collapse: collapse;
   margin: 0 auto;
 }
-th, td, caption {
-  padding: 10px 15px;
+
+tbody {
 
 }
 
+th, td, caption {
+  padding: 5px ;
+
+}
 
 tbody tr:hover {
   background: #eee;

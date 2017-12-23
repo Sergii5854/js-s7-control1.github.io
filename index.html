@@ -12,20 +12,36 @@
   <div class="tabelControls :" id="tabelControls">
     <p>Tabel Controls</p>
     <label >ROW</label>
-    <input id="row" type="number" id="row" min="0" max="100" value="4"/>
+    <input id="row" type="number"  min="0" max="100" value="10"/>
     <label >COL</label>
-    <input id="col"  type="number" id="col"  min="0" max="100" value="4"/>
+    <input id="col"  type="number"   min="0" max="100" value="10"/>
+  </div>
+
+  <div class="fontControl" id="fontControl">
+    <p>Font Controls : </p>
+    <div id="fontColor">
+    <p id="fontSelector">Select a color:</p>
+    <label >Red</label>
+    <input type="range" id="redFont" value="0" min="0" max="255">
+    <label >Green</label>
+    <input type="range" id="greenFont" value="0" min="0" max="255" >
+    <label >Blue</label>
+    <input type="range" id="blueFont" value="0" min="0" max="255" >
+    </div>
+
+    <label >Font Size</label>
+    <input id="fontSize"  type="number"   min="0" max="40" value="14"/>
   </div>
 
 
   <div id="colorControls" class="colorControls">
     <p id="colorSelector">Select a color:</p>
     <label >Red</label>
-    <input type="range" id="red" value="255" min="0" max="255" style="background:red">
+    <input type="range" id="red" value="255" min="0" max="255">
     <label >Green</label>
-    <input type="range" id="green" value="255" min="0" max="255" style="background:green">
+    <input type="range" id="green" value="255" min="0" max="255" >
     <label >Blue</label>
-    <input type="range" id="blue" value="200" min="0" max="255" style="background:blue">
+    <input type="range" id="blue" value="200" min="0" max="255" >
   </div>
 </div>
 
