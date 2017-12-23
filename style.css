@@ -1,3 +1,34 @@
 body{
+  font-family: 'Roboto', sans-serif;
+}
 
+.controls{
+  display: flex;
+  margin: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 50px;
+}
+.tabelControls{
+  max-width: 130px;
+}
+.colorControls{
+  max-width: 150px;
+}
+input{
+  width: 100%;
+  max-width: 200px;
+}
+table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+th, td, caption {
+  padding: 10px 15px;
+
+}
+
+
+tbody tr:hover {
+  background: #eee;
 }
