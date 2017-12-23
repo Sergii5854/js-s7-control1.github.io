@@ -6,6 +6,22 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+<div id="controls">
+  <div class="tabelControls" id="tabelControls">
+    <input id="row" type="number" id="row" min="0" max="100" value="4"/>ROW
+    <input id="col"  type="number" id="col"  min="0" max="100" value="4"/>COL
+  </div>
+
+  <p id="colorSelector">Select a color:</p>
+  <div id="colorControls">
+    <input type="range" id="red" value="255" min="0" max="255" style="background:red"> Red<br>
+    <input type="range" id="green" value="255" min="0" max="255" style="background:green"> Green<br>
+    <input type="range" id="blue" value="200" min="0" max="255" style="background:blue"> Blue
+  </div>
+</div>
+
+
+<div id="table"></div>
 
 
 <script src="./index.js"></script>
