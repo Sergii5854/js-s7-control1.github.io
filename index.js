@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", Load);
 
+
 function Load() {
 
   var tabelControls = document.getElementById('tabelControls');
@@ -9,7 +10,8 @@ function Load() {
   var tableBody;
   var arrTableData = [];
 
-  var writeTestTable = tabelControls.onchange = function () {
+
+  var writeTestTable = tabelControls.onchange = function (data) {
 
     if (document.querySelector('TBODY') != null) {
       document.querySelector('TBODY').remove()
@@ -36,7 +38,7 @@ function Load() {
             td.classList.add('notEdible')
             td.width = '10'
           }
-          // td.appendChild(document.createTextNode("Cell " + i + "," + j));
+
           tr.appendChild(td);
           td.dataset.row = i;
           td.dataset.col = j;
@@ -45,8 +47,50 @@ function Load() {
         }
       }
     }
+
+    if (data) {
+      document.querySelectorAll("td").forEach(function (index, i) {
+
+        if (index.id == i) {
+          index.innerText = data[i].itemData || "";
+          index.classList.add('chenges')
+        }
+      });
+    }
   };
-  writeTestTable()
+
+
+  if (localStorage.getItem('table') != null) {
+    tableFromLocalStorage();
+  } else {
+    writeTestTable();
+    localSet();
+  }
+
+  // table data from local storage
+
+  function tableFromLocalStorage() {
+    var data = JSON.parse(localStorage.getItem('table'));
+    writeTestTable(data);
+
+  }
+
+  // STEP: Local Storage
+
+  function localSet() {
+    var allTd = document.querySelectorAll("td");
+    allTd.forEach(function (index, i) {
+      arrTableData.push({
+        itemID: i,
+        rowItemPosition: index.dataset.row,
+        colItemPosition: index.dataset.col,
+        itemData: index.innerHTML || null
+      });
+
+    });
+    localStorage.setItem("table", JSON.stringify(arrTableData));
+
+  }
 
 
 // STEP: EDIT CELL
@@ -63,18 +107,30 @@ function Load() {
     input.type = "text";
     tableCell.appendChild(input);
     input.value = txt;
+    input.onchange = function (e) {
+      var res = e.target.value;
+      localEdit(tableCell, res)
+    };
     input.focus();
     input.onblur = function () {
       tableCell.innerText = input.value;
       tableCell.textContent = input.value;
     };
-    localSet()
+    localEdit(tableCell, txt)
   }
 
-  function leaveCell(tableCell) {
-    tableCell.innerText = input.value;
-    tableCell.textContent = input.value;
 
+
+  function localEdit(tableCell, data) {
+    if (tableCell && data) {
+      var eddibleCell = tableCell.getAttribute("id");
+
+      var tableLocal = JSON.parse(localStorage.getItem('table'));
+
+      var updateTable = tableLocal[eddibleCell].itemData = data;
+
+      localStorage.setItem("table", JSON.stringify(tableLocal));
+    }
   }
 
 // STEP: EDIT Font property
@@ -88,10 +144,16 @@ function Load() {
   };
 
   fontSize.onchange = function () {
-    tableBody = document.querySelector("tBody");
-    if (tableBody) {
+   var tableTd= document.querySelectorAll("td");
+
+    if (tableTd) {
       var fontSizeTable = fontSize.value;
-      tableBody.style.size = fontSizeTable;
+      console.log("fontSizeTable", fontSizeTable);
+      tableTd.forEach(function (data) {
+        data.style.fontSize = fontSizeTable + "px";
+
+      })
+
     }
   };
 
@@ -115,42 +177,50 @@ function Load() {
     return hex;
   }
 
+  var td = document.querySelectorAll('td');
 
-  // STEP: Local Storage
+  td.forEach(function (index) {
 
-  arrTableData
+    index.addEventListener('mousemove', function init() {
 
-  function localSet() {
-    localStorage.clear()
-    var allTd = document.querySelectorAll("td");
-    var allTdLength = document.querySelectorAll("td").length;
-    allTd.forEach( function (index,i ) {
+      index.removeEventListener('mousemove', init, false);
+      index.className = index.className + ' resizable';
+      var resizer = document.createElement('div');
+      resizer.className = 'resizer';
+      index.appendChild(resizer);
+      resizer.addEventListener('mousedown', initDrag, false);
+    }, false);
 
-
-        arrTableData.push({
-          itemID: i,
-          rowItemPosition: index.dataset.row,
-          colItemPosition: index.dataset.col,
-          itemData: index.innerHTML
-        });
-
-    });
-    localStorage.setItem("table", JSON.stringify(arrTableData));
-
-  }
-
+    var startX, startY, startWidth, startHeight;
+    function remove() {
+      document.querySelectorAll("td").forEach(function (data) {
+        console.log(data,data.removeChild() );
+        data.removeChild()
+        data.classList.remove("chenges resizable");
+      })
+    }
+    function initDrag(e) {
 
 
-  function localEdit(tableCell, data) {
-    tableCell;
-    console.log(data);
-    var eddibleCell = tableCell.getAttribute("id");
-    console.log(eddibleCell);
-    var tableLocal = JSON.parse(localStorage.getItem('table'));
-    tableLocal[eddibleCell].itemData = data;
-    var rowItemPosition = tableLocal.rowItemPosition;
-    var colItemPosition = tableLocal.colItemPosition;
-    var itemData = tableLocal.itemData;
+      startX = e.clientX;
+      startY = e.clientY;
+      startWidth = parseInt(document.defaultView.getComputedStyle(index).width, 10);
+      startHeight = parseInt(document.defaultView.getComputedStyle(index).height, 10);
+      document.documentElement.addEventListener('mousemove', doDrag, false);
+      document.documentElement.addEventListener('mouseup', stopDrag, false);
+    }
 
-  }
+    function doDrag(e) {
+      index.style.width = (startWidth + e.clientX - startX) + 'px';
+      index.style.height = (startHeight + e.clientY - startY) + 'px';
+
+    }
+
+    function stopDrag(e) {
+      document.documentElement.removeEventListener('mousemove', doDrag, false);
+      document.documentElement.removeEventListener('mouseup', stopDrag, false);
+    }
+  })
 }
+
+

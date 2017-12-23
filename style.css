@@ -39,10 +39,24 @@ tbody {
 }
 
 th, td, caption {
-  padding: 5px ;
+  padding: 5px;
 
 }
 
 tbody tr:hover {
   background: #eee;
+}
+
+.resizable {
+  position: relative;
+}
+
+.resizer {
+  width: 10px;
+  height: 10px;
+  background: blue;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
 }
