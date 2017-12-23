@@ -35,11 +35,14 @@ function Load() {
 
           if (col[j] == 1) {
             td.appendChild(document.createTextNode(i + 1));
-            td.classList.add('notEdible')
+            td.dataset.edible = 'false';
             td.width = '10'
+          }else{
+            td.dataset.edible = 'true';
           }
 
           tr.appendChild(td);
+
           td.dataset.row = i;
           td.dataset.col = j;
           td.id = parseInt(i + "" + j);
@@ -95,7 +98,8 @@ function Load() {
 
 // STEP: EDIT CELL
   table.addEventListener("click", function (e) {
-    if (e.target.tagName === "TD" && e.target.className !== 'notEdible') {
+
+    if (e.target.tagName === "TD" && e.target.attributes.getNamedItem('data-edible').value !== 'false') {
       editText(e.target);
     }
   }, false);
